@@ -9,7 +9,7 @@ import { incrementApiCalls, getApiCalls, CACHE_EXPIRY } from './cache';
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
 export const fetchWeatherData = async (city: string): Promise<WeatherData | null> => {
-    const encodedCity = encodeURIComponent(city).trim();
+    const encodedCity = encodeURIComponent(city.trim());
     const cacheKey = `weather-${encodedCity}`;
     const cachedData = await AsyncStorage.getItem(cacheKey);
     const cachedTime = await AsyncStorage.getItem(`${cacheKey}-time`);
@@ -19,20 +19,14 @@ export const fetchWeatherData = async (city: string): Promise<WeatherData | null
     }
 
     const calls = await getApiCalls();
-    if(calls > 50) {
+    if(calls > 5) {
         console.warn('API call limit reached! Try again later.');
         return null;
     }
 
     try {
-        const response: AxiosResponse<WeatherData> = await axios.get(API_URL, {
-            params: {
-                q: encodedCity,
-                // appid: WEATHER_API_KEY,
-                appid: '2df36b7329eb945bb56983975b8abfbd',
-                units: 'metric',
-            },
-        });
+        // Sending the request and getting the response
+        const response: AxiosResponse<WeatherData> = await axios.get(`${API_URL}?q=${encodedCity}&appid=${WEATHER_API_KEY}&units=metric`);
 
         const weatherData: WeatherData = response.data;
 

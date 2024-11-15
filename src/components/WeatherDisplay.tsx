@@ -33,18 +33,20 @@ const styles = StyleSheet.create({
     city: {
         fontSize: 24,
         fontWeight: 'bold',
+        color: 'white',
     },
     temperature: {
         fontSize: 24,
         fontWeight: 'bold',
+        color: 'white',
     },
     weatherIcon: {
-        width: 100,
-        height: 100,
+        width: 50,
+        height: 50,
     },
     description: {
         fontSize: 18,
-        color: '#555',
+        color: '#999',
     },
 });
 

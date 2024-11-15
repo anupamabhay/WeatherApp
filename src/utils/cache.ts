@@ -6,8 +6,8 @@ export const CACHE_EXPIRY = 15 * 60 * 1000;
 const CALLS_KEY = 'api-calls';
 const CALLS_TIMESTAMP_KEY = 'api-calls-timestamp';
 
-// 5 API calls allowed every 2 hours (in milliseconds)
-const LIMIT_PERIOD = 2 * 60 * 60 * 1000;
+// 5 API calls allowed every 1 hour (in milliseconds)
+const LIMIT_PERIOD = 1 * 60 * 60 * 1000;
 
 // Function to get the number of API calls
 export const getApiCalls = async(): Promise<number> => {
