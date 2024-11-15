@@ -31,14 +31,16 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     city: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: '#666',
+        letterSpacing: 1,
     },
     temperature: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: '#666',
+        letterSpacing: 1,
     },
     weatherIcon: {
         width: 50,
@@ -46,7 +48,9 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 18,
-        color: '#999',
+        color: '#888',
+        letterSpacing: 1,
+        textTransform: 'capitalize',
     },
 });
 

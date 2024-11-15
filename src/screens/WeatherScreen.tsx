@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { fetchWeatherData } from '../utils/api';
 import { WeatherData } from '../types/WeatherData';
 import WeatherDisplay from '../components/WeatherDisplay';
@@ -38,15 +38,22 @@ const WeatherScreen: React.FC = () => {
         <TextInput
           value={city}
           placeholder="Enter city"
+          placeholderTextColor="#666"
           onChangeText={setCity}
           style={styles.input}
         />
-        <Button title="Get Weather" onPress={handleFetchWeather} />
+
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={handleFetchWeather}
+        >
+          <Text style={styles.btnText}>Get Weather</Text>
+        </TouchableOpacity>
 
         {weather ? (
           <WeatherDisplay data={weather} />
         ) : (
-          <Text  style={styles.placeholderText}>Enter a city to get weather data.</Text>
+          <Text style={styles.placeholderText}>Enter a city to get weather data.</Text>
         )}
       </View>
     );
@@ -59,19 +66,34 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 16,
-        backgroundColor: 'black',
+        backgroundColor: 'white',
     },
     input: {
         height: 40,
-        borderColor: 'gray',
+        borderColor: '#666',
         borderWidth: 1,
+        borderRadius: 10,
         paddingHorizontal: 8,
         marginBottom: 10,
-        color: 'white',
+        color: '#666',
+        letterSpacing: 1,
     },
     placeholderText: {
         textAlign: 'center',
-        color: '#888',
+        color: '#666',
         marginTop: 10,
+        letterSpacing: 1,
+    },
+    btn: {
+      borderRadius: 10,
+      backgroundColor: 'salmon',
+      padding: 10,
+    },
+    btnText: {
+      textAlign: 'center',
+      textTransform: 'uppercase',
+      fontWeight: '600',
+      letterSpacing: 1,
+      color: '#333',
     },
 });

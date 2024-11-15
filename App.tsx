@@ -1,11 +1,15 @@
 import React from 'react';
 import WeatherScreen from './src/screens/WeatherScreen';
 import Toast from 'react-native-toast-message';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 
 const App: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor="white"
+        barStyle="dark-content"
+      />
       <WeatherScreen />
       <Toast />
     </SafeAreaView>

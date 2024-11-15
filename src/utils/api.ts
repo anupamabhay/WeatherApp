@@ -19,7 +19,7 @@ export const fetchWeatherData = async (city: string): Promise<WeatherData | null
     }
 
     const calls = await getApiCalls();
-    if(calls > 5) {
+    if(calls > 100) {
         console.warn('API call limit reached! Try again later.');
         return null;
     }
