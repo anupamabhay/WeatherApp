@@ -7,7 +7,7 @@ const App: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
-        backgroundColor="white"
+        backgroundColor="#FFFAF1"
         barStyle="dark-content"
       />
       <WeatherScreen />

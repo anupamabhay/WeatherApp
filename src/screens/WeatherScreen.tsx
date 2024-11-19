@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 20,
-        backgroundColor: 'white',
+        backgroundColor: '#FFFAF1',
         gap: 40,
     },
     input: {
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         marginBottom: 10,
         color: '#666',
+        backgroundColor: 'white',
         letterSpacing: 1,
     },
     placeholderText: {

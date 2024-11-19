@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { WeatherData } from '../types/WeatherData';
-import { WeatherIcons } from './WeatherIcons';
+import WeatherIcons from './WeatherIcons';
 
 
 interface WeatherDisplayProps {
@@ -27,7 +27,6 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({data}) => {
                     <Text style={styles.description}>{weatherInfo.description}</Text>
                 </View>
 
-                {/* Icon code here */}
                 <View style={styles.right_container}>
                     {WeatherIcons(weatherInfo.main)}
                 </View>
@@ -35,7 +34,7 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({data}) => {
 
             <View style={styles.extra_details_container}>
                 <Text style={styles.extra_text}>
-                    Humidity: {main.humidity}% {wind.speed && `| Wind: ${wind.speed}`} {wind.gust && `| Gust: ${wind.gust}`}
+                    {main.humidity && `Humidity: ${main.humidity}%`} {wind.speed && `| Wind: ${wind.speed}`} {wind.gust && `| Gust: ${wind.gust}`}
                 </Text>
             </View>
         </View>
