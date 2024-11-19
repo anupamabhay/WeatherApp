@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { fetchWeatherData } from '../utils/api';
 import { WeatherData } from '../types/WeatherData';
 import WeatherDisplay from '../components/WeatherDisplay';
@@ -23,6 +23,8 @@ const WeatherScreen: React.FC = () => {
         const data = await fetchWeatherData(city);
         if(data) {
             setWeather(data);
+            setCity('');
+            Keyboard.dismiss();
         } else {
           Toast.show({
             type: 'error',
@@ -35,20 +37,22 @@ const WeatherScreen: React.FC = () => {
 
     return (
       <View style={styles.container}>
-        <TextInput
-          value={city}
-          placeholder="Enter city"
-          placeholderTextColor="#666"
-          onChangeText={setCity}
-          style={styles.input}
-        />
+        <View>
+          <TextInput
+            value={city}
+            placeholder="Location"
+            placeholderTextColor="#666"
+            onChangeText={setCity}
+            style={styles.input}
+          />
 
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={handleFetchWeather}
-        >
-          <Text style={styles.btnText}>Get Weather</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={handleFetchWeather}
+          >
+            <Text style={styles.btnText}>Get Weather</Text>
+          </TouchableOpacity>
+        </View>
 
         {weather ? (
           <WeatherDisplay data={weather} />
@@ -65,8 +69,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        padding: 16,
+        padding: 20,
         backgroundColor: 'white',
+        gap: 40,
     },
     input: {
         height: 40,
