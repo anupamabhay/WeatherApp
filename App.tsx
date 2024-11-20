@@ -1,6 +1,5 @@
 import React from 'react';
 import WeatherScreen from './src/screens/WeatherScreen';
-import Toast from 'react-native-toast-message';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 
 const App: React.FC = () => {
@@ -11,7 +10,6 @@ const App: React.FC = () => {
         barStyle="dark-content"
       />
       <WeatherScreen />
-      <Toast />
     </SafeAreaView>
   );
 };

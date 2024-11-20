@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard, ToastAndroid } from 'react-native';
 import { fetchWeatherData } from '../utils/api';
 import { WeatherData } from '../types/WeatherData';
 import WeatherDisplay from '../components/WeatherDisplay';
-import Toast from 'react-native-toast-message';
 
 const WeatherScreen: React.FC = () => {
     const [city, setCity] = useState('');
@@ -11,12 +10,11 @@ const WeatherScreen: React.FC = () => {
 
     const handleFetchWeather = async () => {
         if(!city.trim()) {
-          Toast.show({
-            type: 'error',
-            text1: 'Invalid input',
-            text2: 'Please enter a valid city name',
-            position: 'top',
-          });
+          ToastAndroid.showWithGravity(
+            'Please enter a valid city name',
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM
+          );
           return;
         }
 
@@ -26,12 +24,11 @@ const WeatherScreen: React.FC = () => {
             setCity('');
             Keyboard.dismiss();
         } else {
-          Toast.show({
-            type: 'error',
-            text1: 'Couldn\'t fetch weather data',
-            text2: 'Please try again later.',
-            position: 'top',
-          });
+          ToastAndroid.showWithGravity(
+            'Failed to fetch weather data. Try again later.',
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM
+          );
         }
     };
 
