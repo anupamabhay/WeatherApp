@@ -5,8 +5,6 @@ import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 
-import com.timhagn.rngloc.RNGLocation;
-
 class MainActivity : ReactActivity() {
 
   /**
@@ -21,11 +19,4 @@ class MainActivity : ReactActivity() {
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
-
-  override fun getPackages(): List<ReactPackage> {
-    return Arrays.asList(
-        MainReactPackage(),
-        RNGLocation() // <-- Add this line
-    )
-  }
 }
