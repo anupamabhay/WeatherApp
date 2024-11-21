@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard, ToastAndroid } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard, ToastAndroid, Platform, Alert } from 'react-native';
 import { fetchWeatherData } from '../utils/api';
 import { WeatherData } from '../types/WeatherData';
 import WeatherDisplay from '../components/WeatherDisplay';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WeatherScreen: React.FC = () => {
     const [city, setCity] = useState('');
@@ -10,11 +11,15 @@ const WeatherScreen: React.FC = () => {
 
     const handleFetchWeather = async () => {
         if(!city.trim()) {
-          ToastAndroid.showWithGravity(
-            'Please enter a valid city name',
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM
-          );
+          if(Platform.OS === 'android') {
+            ToastAndroid.showWithGravity(
+              'Please enter a valid city name',
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM
+            );
+          } else {
+            Alert.alert('Please enter a valid city name');
+          }
           return;
         }
 
@@ -24,11 +29,15 @@ const WeatherScreen: React.FC = () => {
             setCity('');
             Keyboard.dismiss();
         } else {
-          ToastAndroid.showWithGravity(
-            'Failed to fetch weather data. Try again later.',
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM
-          );
+          if(Platform.OS === 'android') {
+            ToastAndroid.showWithGravity(
+              'Failed to fetch weather data. Try again later.',
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM
+            );
+          } else {
+            Alert.alert('Failed to fetch weather data. Try again later.');
+          }
         }
     };
 
@@ -43,12 +52,21 @@ const WeatherScreen: React.FC = () => {
             style={styles.input}
           />
 
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={handleFetchWeather}
-          >
-            <Text style={styles.btnText}>Get Weather</Text>
-          </TouchableOpacity>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              style={styles.btn}
+            >
+              {/* <Ionicons name="location-sharp" size={20} color="#333" /> */}
+              <Text style={styles.btnText}>Fetch Location</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={handleFetchWeather}
+            >
+              <Text style={styles.btnText}>Get Weather</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {weather ? (
@@ -87,10 +105,15 @@ const styles = StyleSheet.create({
         marginTop: 10,
         letterSpacing: 1,
     },
+    btnContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
     btn: {
       borderRadius: 10,
       backgroundColor: 'salmon',
       padding: 10,
+      width: '48.5%',
     },
     btnText: {
       textAlign: 'center',
