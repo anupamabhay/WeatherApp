@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard, ToastAnd
 import { fetchWeatherData } from '../utils/api';
 import { WeatherData } from '../types/WeatherData';
 import WeatherDisplay from '../components/WeatherDisplay';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WeatherScreen: React.FC = () => {
     const [city, setCity] = useState('');
@@ -54,17 +54,18 @@ const WeatherScreen: React.FC = () => {
 
           <View style={styles.btnContainer}>
             <TouchableOpacity
-              style={styles.btn}
+              style={[styles.btn, styles.btnLeft]}
             >
-              {/* <Ionicons name="location-sharp" size={20} color="#333" /> */}
-              <Text style={styles.btnText}>Fetch Location</Text>
+              <Ionicons name="location-sharp" size={20} color="salmon" />
+              <Text style={[styles.btnText, styles.btnTextLeft]}>Location</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.btn}
               onPress={handleFetchWeather}
             >
-              <Text style={styles.btnText}>Get Weather</Text>
+              <Ionicons name="cloud-download" size={20} color="#333" />
+              <Text style={styles.btnText}>Weather</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -108,18 +109,28 @@ const styles = StyleSheet.create({
     btnContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
+      gap: 10,
     },
     btn: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
       borderRadius: 10,
       backgroundColor: 'salmon',
-      padding: 10,
-      width: '48.5%',
+      paddingVertical: 10,
+      gap: 10,
     },
     btnText: {
-      textAlign: 'center',
       textTransform: 'uppercase',
       fontWeight: '600',
       letterSpacing: 1,
       color: '#333',
+    },
+    btnLeft: {
+      backgroundColor: '#333',
+    },
+    btnTextLeft: {
+      color: 'salmon',
     },
 });
