@@ -6,6 +6,7 @@ export interface WeatherData {
         humidity: number;
         temp_max: number;
         temp_min: number;
+        pressure: number;
     };
     weather: {
         main: string; // weather status name: Clear, etc.
@@ -15,9 +16,14 @@ export interface WeatherData {
     name: string; // name of the city
     sys: {
         country: string;
+        sunrise: number;
+        sunset: number;
     };
     wind: {
-        gust: number;
         speed: number;
     };
+    clouds: {
+        all: number;
+    };
+    dt: number;
 }
