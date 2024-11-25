@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard, ToastAndroid, Platform, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard, ToastAndroid, Platform, Alert, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { fetchWeatherData } from '../utils/api';
 import { WeatherData } from '../types/WeatherData';
 import WeatherDisplay from '../components/WeatherDisplay';
@@ -42,40 +42,46 @@ const WeatherScreen: React.FC = () => {
     };
 
     return (
-      <View style={styles.container}>
-        <View>
-          <TextInput
-            value={city}
-            placeholder="Location"
-            placeholderTextColor="#666"
-            onChangeText={setCity}
-            style={styles.input}
-          />
+      <KeyboardAvoidingView
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+          <View>
+            <TextInput
+              value={city}
+              placeholder="Enter city"
+              placeholderTextColor="#666"
+              onChangeText={setCity}
+              style={styles.input}
+            />
 
-          <View style={styles.btnContainer}>
-            <TouchableOpacity
-              style={[styles.btn, styles.btnLeft]}
-            >
-              <Ionicons name="location-sharp" size={20} color="salmon" />
-              <Text style={[styles.btnText, styles.btnTextLeft]}>Location</Text>
-            </TouchableOpacity>
+            <View style={styles.btnContainer}>
+              <TouchableOpacity
+                style={[styles.btn, styles.btnLeft]}
+              >
+                <Ionicons name="location-sharp" size={20} color="#222D41" />
+                <Text style={[styles.btnText, styles.btnTextLeft]}>Location</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={handleFetchWeather}
-            >
-              <Ionicons name="cloud-download" size={20} color="#333" />
-              <Text style={styles.btnText}>Weather</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={handleFetchWeather}
+              >
+                <Ionicons name="cloud-download" size={20} color="white" />
+                <Text style={styles.btnText}>Weather</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
-        {weather ? (
-          <WeatherDisplay data={weather} />
-        ) : (
-          <Text style={styles.placeholderText}>Enter a city to get weather data.</Text>
-        )}
-      </View>
+          {weather ? (
+            <WeatherDisplay data={weather} />
+          ) : (
+            <Text style={styles.placeholderText}>Enter a city to get weather data.</Text>
+          )}
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
 };
 
@@ -83,16 +89,17 @@ export default WeatherScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         justifyContent: 'center',
         padding: 20,
-        backgroundColor: '#FFFAF1',
+        // backgroundColor: '#FFFAF1',
+        backgroundColor: '#222D41',
         gap: 40,
     },
     input: {
         height: 40,
-        borderColor: '#666',
-        borderWidth: 1,
+        // borderColor: '#666',
+        // borderWidth: 1,
         borderRadius: 10,
         paddingHorizontal: 8,
         marginBottom: 10,
@@ -102,7 +109,7 @@ const styles = StyleSheet.create({
     },
     placeholderText: {
         textAlign: 'center',
-        color: '#666',
+        color: '#BDBCBC',
         marginTop: 10,
         letterSpacing: 1,
     },
@@ -117,20 +124,26 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 10,
-      backgroundColor: 'salmon',
+      backgroundColor: '#F9A825',
       paddingVertical: 10,
       gap: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 2,
     },
     btnText: {
       textTransform: 'uppercase',
       fontWeight: '600',
       letterSpacing: 1,
-      color: '#333',
+      color: 'white',
     },
     btnLeft: {
-      backgroundColor: '#333',
+      // backgroundColor: '#1E88E5',
+      backgroundColor: 'rgba(191, 214, 222, 0.8)',
     },
     btnTextLeft: {
-      color: 'salmon',
+      color: '#222D41',
     },
 });
