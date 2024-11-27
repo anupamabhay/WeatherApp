@@ -1,13 +1,46 @@
-import React, { useState } from 'react';
+/* eslint-disable quotes */
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard, ToastAndroid, Platform, Alert, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { fetchWeatherData } from '../utils/api';
 import { WeatherData } from '../types/WeatherData';
 import WeatherDisplay from '../components/WeatherDisplay';
+import useLocation from '../utils/useLocation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WeatherScreen: React.FC = () => {
     const [city, setCity] = useState('');
     const [weather, setWeather] = useState<WeatherData | null>(null);
+    const {userCity, fetchLocation, error} = useLocation();
+
+    useEffect(() => {
+      if(userCity) {
+          setCity(userCity);
+          if(Platform.OS === 'android') {
+            ToastAndroid.showWithGravity(
+              `Location fetched. Tap the 'WEATHER' button.`,
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM
+            );
+          } else {
+            Alert.alert(`Location fetched. Tap the 'WEATHER' button.`);
+          }
+      }
+    }, [userCity]);
+
+    const handleLocationPress = () => {
+      fetchLocation();
+      if(error){
+        if(Platform.OS === 'android') {
+          ToastAndroid.showWithGravity(
+            error || 'Unable to fetch location',
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM
+          );
+        } else {
+          Alert.alert('Failed to fetch location.');
+        }
+      }
+    };
 
     const handleFetchWeather = async () => {
         if(!city.trim()) {
@@ -60,6 +93,7 @@ const WeatherScreen: React.FC = () => {
             <View style={styles.btnContainer}>
               <TouchableOpacity
                 style={[styles.btn, styles.btnLeft]}
+                onPress={handleLocationPress}
               >
                 <Ionicons name="location-sharp" size={20} color="#222D41" />
                 <Text style={[styles.btnText, styles.btnTextLeft]}>Location</Text>
@@ -92,14 +126,11 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: 'center',
         padding: 20,
-        // backgroundColor: '#FFFAF1',
         backgroundColor: '#222D41',
         gap: 40,
     },
     input: {
         height: 40,
-        // borderColor: '#666',
-        // borderWidth: 1,
         borderRadius: 10,
         paddingHorizontal: 8,
         marginBottom: 10,
@@ -140,7 +171,6 @@ const styles = StyleSheet.create({
       color: 'white',
     },
     btnLeft: {
-      // backgroundColor: '#1E88E5',
       backgroundColor: 'rgba(191, 214, 222, 0.8)',
     },
     btnTextLeft: {
